@@ -151,7 +151,7 @@ class Printer extends EventEmitter {
 					}
 
 					request.continue();
-				});	
+				});
 			}
 
 			if (this.disableScriptInjection) {
@@ -207,6 +207,10 @@ class Printer extends EventEmitter {
 				this.emit("size", size);
 			});
 
+			await page.exposeFunction("onLayoutErrors", (errors) => {
+				this.emit("layouterrors", errors);
+			});
+
 			await page.exposeFunction("onPage", (page) => {
 
 				this.pages.push(page);
@@ -253,11 +257,22 @@ class Printer extends EventEmitter {
 					window.onSize(size);
 				});
 
+				const getOverflowErrors = (flow) => {
+					const errors = flow.pages
+						.filter((page) => page.errors?.length > 0)
+						.map((page) => ( page.id));
+
+					return errors;
+				};
+
 				window.PagedPolyfill.on("rendered", (flow) => {
 					let msg = "Rendering " + flow.total + " pages took " + flow.performance + " milliseconds.";
+					const layoutErrors = getOverflowErrors(flow);
+
+					if (layoutErrors.length) window.onLayoutErrors(JSON.stringify(getOverflowErrors(flow)));
+
 					window.onRendered(msg, flow.width, flow.height, flow.orientation);
 				});
-
 				if (window.PagedConfig.before) {
 					await window.PagedConfig.before();
 				}

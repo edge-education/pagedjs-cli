@@ -158,6 +158,10 @@ if (typeof input === "string") {
 		spinner.start("Processing");
 	});
 
+	printer.on("layouterrors", (msg) => {
+		spinner.start(`layouterrors: ${msg}`);
+	});
+
 	options.outlineTags = !options.outlineTags ? ["h1","h2","h3"] : options.outlineTags.split(",");
 
 	let file;
