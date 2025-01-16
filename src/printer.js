@@ -264,8 +264,8 @@ class Printer extends EventEmitter {
 				window.PagedPolyfill.on("rendered", (flow) => {
 					let msg = "Rendering " + flow.total + " pages took " + flow.performance + " milliseconds.";
 					const layoutErrors = getOverflowErrors(flow);
-
-					if (layoutErrors.length) window.onLayoutErrors(JSON.stringify(getOverflowErrors(flow)));
+					
+					if (layoutErrors.length) window.onLayoutErrors(JSON.stringify(layoutErrors));
 
 					window.onRendered(msg, flow.width, flow.height, flow.orientation);
 				});
