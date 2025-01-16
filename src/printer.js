@@ -257,13 +257,9 @@ class Printer extends EventEmitter {
 					window.onSize(size);
 				});
 
-				const getOverflowErrors = (flow) => {
-					const errors = flow.pages
+				const getOverflowErrors = (flow) =>  flow.pages
 						.filter((page) => page.errors?.length > 0)
 						.map((page) => ( page.id));
-
-					return errors;
-				};
 
 				window.PagedPolyfill.on("rendered", (flow) => {
 					let msg = "Rendering " + flow.total + " pages took " + flow.performance + " milliseconds.";
