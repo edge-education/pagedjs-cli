@@ -55,7 +55,8 @@ class Printer extends EventEmitter {
 			headless: this.headless,
 			args: [],
 			ignoreHTTPSErrors: this.ignoreHTTPSErrors,
-			userDataDir: tmpDir
+			userDataDir: tmpDir,
+			executablePath: '/Applications/Google Chrome.app/Contents/MacOS/Google Chrome',
 		};
 
 		if (process.platform === "linux") {
@@ -262,9 +263,9 @@ class Printer extends EventEmitter {
 						.map((page) => ( page.id));
 
 				window.PagedPolyfill.on("rendered", (flow) => {
-					let msg = "Rendering " + flow.total + " pages took " + flow.performance + " milliseconds.";
+					let msg = "Rendering " + flow.total + " pages took " + flow.performance + " milliseconds on chrome.";
 					const layoutErrors = getOverflowErrors(flow);
-					
+
 					if (layoutErrors.length) window.onLayoutErrors(JSON.stringify(layoutErrors));
 
 					window.onRendered(msg, flow.width, flow.height, flow.orientation);
