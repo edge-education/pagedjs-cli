@@ -56,7 +56,7 @@ class Printer extends EventEmitter {
 			args: [],
 			ignoreHTTPSErrors: this.ignoreHTTPSErrors,
 			userDataDir: tmpDir,
-			executablePath: '/Applications/Google Chrome.app/Contents/MacOS/Google Chrome',
+			executablePath: options.executablePath || '/Applications/Google Chrome.app/Contents/MacOS/Google Chrome',
 		};
 
 		if (process.platform === "linux") {

@@ -46,6 +46,7 @@ program
 	.option("--warn", "Enable warning logs")
 	.option("--disable-script-injection", "Disable in injection of the polyphill script.")
 	.option("--extra-header <header:value>", "Header to be added to the page request.", collect, [])
+	.option("--executable-path <executablePath>", "Path to the Chrome executable")
 	.parse(process.argv);
 
 function collect(value, previous) {
@@ -129,7 +130,8 @@ if (typeof input === "string") {
 		emulateMedia: options.media,
 		enableWarnings: options.warn,
 		disableScriptInjection: options.disableScriptInjection,
-		extraHTTPHeaders: extraHTTPHeaders
+		extraHTTPHeaders: extraHTTPHeaders,
+		executablePath: options.executablePath,
 	};
 
 	if (options.forceTransparentBackground) {
@@ -193,5 +195,4 @@ if (typeof input === "string") {
 	} else if (file) {
 		process.stdout.write(file);
 	}
-
 })();
