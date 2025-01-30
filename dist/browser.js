@@ -941,7 +941,7 @@
 	var d$2 = {exports: {}};
 
 	// ES3 safe
-	var _undefined$1 = void 0;
+	var _undefined$1 = undefined;
 
 	var is$4 = function (value) { return value !== _undefined$1 && value !== null; };
 
@@ -1620,7 +1620,6 @@
 
 				// Only check x characters
 				if (length >= this.maxChars) {
-
 					this.hooks && this.hooks.layout.trigger(wrapper, this);
 
 					let imgs = wrapper.querySelectorAll("img");
@@ -1655,6 +1654,36 @@
 					}
 				}
 
+				// Check for overflow and handle it
+				/*if (this.hasOverflow(wrapper, bounds)) {
+					this.hooks && this.hooks.layout.trigger(wrapper, this);
+
+					newBreakToken = this.findBreakToken(wrapper, source, bounds, prevBreakToken);
+
+					if (newBreakToken) {
+						length = 0;
+						this.rebuildTableFromBreakToken(newBreakToken, wrapper);
+					}
+
+					if (newBreakToken && newBreakToken.equals(prevBreakToken)) {
+						const errorMessage = "Unable to layout item";
+						console.warn(`${errorMessage}:`, node);
+
+						this.error = { msg: errorMessage, item: node };
+
+						const afterNode = newBreakToken.node ? nodeAfter(newBreakToken.node) : null;
+
+						if (afterNode) {
+							newBreakToken = new BreakToken(afterNode);
+						} else {
+							this.hooks && this.hooks.beforeRenderResult.trigger(undefined, wrapper, this);
+							return new RenderResult(
+								undefined,
+								new OverflowContentError(errorMessage, [node])
+							);
+						}
+					}
+				}*/
 			}
 
 			this.hooks && this.hooks.beforeRenderResult.trigger(newBreakToken, wrapper, this);
@@ -29469,7 +29498,7 @@
 		addPageAttributes(page, start, pages) {
 			let namedPages = [start.dataset.page];
 
-			if (namedPages && namedPages.length) {
+			if (namedPages.length) {
 				for (const named of namedPages) {
 					if (!named) {
 						continue;
@@ -31526,7 +31555,7 @@
 									func: func,
 									args: args,
 									value: value,
-									style: style ,
+									style: style,
 									selector: s,
 									fullSelector: selector
 								};
@@ -32626,8 +32655,7 @@
 			created[desc] = true;
 			name = "@@" + desc;
 			defineProperty(
-				objPrototype,
-				name,
+				objPrototype, name,
 				d.gs(null, function (value) {
 					// For IE11 issue see:
 					// https://connect.microsoft.com/IE/feedbackdetail/view/1928508/
@@ -32783,8 +32811,7 @@
 			valueOf: d(function () { return validateSymbol(this); })
 		});
 		defineProperty(
-			SymbolPolyfill.prototype,
-			SymbolPolyfill.toPrimitive,
+			SymbolPolyfill.prototype, SymbolPolyfill.toPrimitive,
 			d("", function () {
 				var symbol = validateSymbol(this);
 				if (typeof symbol === "symbol") return symbol;
