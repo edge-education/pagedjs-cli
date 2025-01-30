@@ -99,7 +99,7 @@ class Printer extends EventEmitter {
 
 			page.setExtraHTTPHeaders(this.extraHTTPHeaders);
 
-			await page.emulateMediaType(this.emulateMedia);
+			// await page.emulateMediaType(this.emulateMedia);
 
 			if (this.overrideDefaultBackgroundColor) {
 				page._client.send("Emulation.setDefaultBackgroundColorOverride", { color: this.overrideDefaultBackgroundColor });
